@@ -3,12 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Сайт Екатерины Анощенковой</title>
-	<link rel="stylesheet" href="style.css">
-	<script src="script.js"></script>
+	<link rel="stylesheet" href="css\style.css">
+	<link rel="stylesheet" href="css\navbar.css">
+        <link rel="stylesheet" href="css\index.css">
+	<script src="js\navbar.js"></script>
 	<link type="image/x-icon" href="img\back_round.jpg" rel="shortcut icon">
     	<link type="Image/x-icon" href="img\back_round.jpg" rel="icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body onLoad="onResize()">
 
 <menu id="content">
@@ -60,6 +63,7 @@
 		</div>
 	</div>
 </unic_content>
+
 
 </body>
 
