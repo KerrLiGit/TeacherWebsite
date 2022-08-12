@@ -16,10 +16,20 @@
 
 <menu id="content">
 	<div class="box1"><a><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
-	<div class="box2" id="box2_1"><a href="learning_activities.html">Обучение</a></div>
-	<div class="box2" id="box2_2"><a href="extracurricular_activities.html">Подготовка&nbsp;к<br>олимпиадам</a></div>
-	<div class="box2" id="box2_3"><a href="preparation_for_the_exam.html">Подготовка&nbsp;к<br>ОГЭ/ЕГЭ</a></div>
-	<div class="box2" id="box2_4"><a href="certificates.html">Обо мне</a></div>
+	<div class="box2" id="box2_1"><a href="learn.php">Обучение</a></div>
+	<div class="box2" id="box2_2"><a href="olymp.php">Олимпиады</a></div>
+	<div class="box2" id="box2_3"><a href="about.php">Обо мне</a></div>
+	<?php 
+	require "vendor/lib.php";
+	safe_session_start();
+	if ($_SESSION['user']) {
+		echo '<div class="box2" id="box2_4"><a href="vendor\signout.php">Выйти</a></div>';
+	}
+	else {
+		echo '<div class="box2" id="box2_4"><a href="signin.php">Войти</a></div>';
+	}
+	?>
+	
 </menu>
 
 <div class="box1o" id="btno" onclick="openNav()"><b>&#9776;</b></div>  
