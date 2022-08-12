@@ -15,18 +15,18 @@
 <body onLoad="onResize()">
 
 <menu id="content">
-	<div class="box1"><a><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
-	<div class="box2" id="box2_1"><a href="learn.php">Обучение</a></div>
-	<div class="box2" id="box2_2"><a href="olymp.php">Олимпиады</a></div>
-	<div class="box2" id="box2_3"><a href="about.php">Обо мне</a></div>
+	<div class="box1"><a class="nava"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
+	<div class="box2" id="box2_1"><a class="nava" href="learn.php">Обучение</a></div>
+	<div class="box2" id="box2_2"><a class="nava" href="olymp.php">Олимпиады</a></div>
+	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php 
 	require "vendor/lib.php";
 	safe_session_start();
 	if ($_SESSION['user']) {
-		echo '<div class="box2" id="box2_4"><a href="vendor\signout.php">Выйти</a></div>';
+		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
-		echo '<div class="box2" id="box2_4"><a href="signin.php">Войти</a></div>';
+		echo '<div class="box2" id="box2_4"><a class="nava" href="signin.php">Войти</a></div>';
 	}
 	?>
 	
@@ -72,7 +72,7 @@
 			<p>(С) <span class="fio">Екатерина Васильевна Анощенкова</span>, <address>Россия, Саранск</address></p>
 		</div>
 	</div>
-</unic_content>
+</div>
 
 
 </body>

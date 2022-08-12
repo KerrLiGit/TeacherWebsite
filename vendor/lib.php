@@ -18,4 +18,24 @@
 		}
 		return $str;
 	}
+
+	function admin_access() {
+		safe_session_start();
+		if (!$_SESSION['user'])
+			return false;          
+		if ($_SESSION['user']['role'] == 'admin' || $_SESSION['user']['role'] == 'teacher') 
+			return true;
+		return false;
+	}
+
+	function student_access($class) {
+		safe_session_start();
+		if (!$_SESSION['user'])
+			return false;                    
+		if ($_SESSION['user']['role'] == 'admin' || $_SESSION['user']['role'] == 'teacher') 
+			return true;
+		if ($_SESSION['user']['role'] == 'student' && $_SESSION['user']['class'] == $class)
+			return true;
+		return false;
+	}
 ?>

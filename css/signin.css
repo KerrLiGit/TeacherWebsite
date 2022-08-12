@@ -3,6 +3,7 @@ form {
 }
 
 .app-router-container {
+	font-family: sans-serif;
 	display: flex;
 	background-color: floralwhite;
 	flex-direction: column;

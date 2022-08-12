@@ -62,27 +62,27 @@
 	font-family: sans-serif;
 }
 
-a {
+.nava {
 	font-size: 16px;
 	font-family: sans-serif;
 }
 
-a:link {
+.nava:link {
 	text-decoration: none; 
 	color: floralwhite;
 }
 
-a:active {
+.nava:active {
 	text-decoration: none;
 	color: floralwhite; 
 }
 
-a:visited {
+.nava:visited {
 	text-decoration: none;
 	color: floralwhite;
 }
 
-a:hover {
+.nava:hover {
 	text-decoration: none;
 	color: cornflowerblue;
 }

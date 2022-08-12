@@ -29,7 +29,8 @@
 			</label>
 			<label>Класс</label>
 			<label>
-				<select name="class">
+				<select name="class" required>
+				<option></option>
 				<?php
 					require "vendor/lib.php";
 					$mysqli = get_sql_connection();
