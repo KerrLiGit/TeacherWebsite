@@ -25,9 +25,11 @@
 			</label>
 			<label><a href="login.php">Регистрация</a></label>
 			<button type="submit" title="Вход в систему">Войти</button>
-			<label class="message"><?php
+			<label class="message">
+				<?php
 				require "vendor/lib.php"; 
-				echo session_message("message-auth"); ?>
+				echo session_message("message-auth"); 
+				?>
 			</label>
 		</form>
 	</div>

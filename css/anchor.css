@@ -7,6 +7,13 @@
 	padding-bottom: 15px;
 }
 
+#panel:hover {
+	font-size: 16px;
+	text-align: left;
+	color: cornflowerblue;
+	padding-bottom: 15px;
+}
+
 #anchor_content {
 	z-index: 9998;
 	display: flex;
@@ -37,7 +44,7 @@
 		grid-column: 1 / 2;
 		grid-row: 1;
 		font-weight: bold;
-		position: sticky;
+		_position: sticky; /* меню начинает оставаться на месте при прокрутке */
 	    top: 100px;
 	}
 	
@@ -81,7 +88,7 @@
 		padding-right: 30px;
 	}
 	
-	.anchor_certificates {
+	.anchor_button {
 		grid-column: 11 / 13;
 		grid-row: 1;
 	}

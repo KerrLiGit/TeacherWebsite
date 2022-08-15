@@ -1,9 +1,10 @@
 <?php
-	require "vendor/lib.php";
-	if (!student_access(5)) {
-		header('Location: ../');
-		$_SESSION['message'] = 'Отказано в доступе: несоответствие уровня доступа.';
-	}
+require "vendor/lib.php";
+safe_session_start();
+if (!student_access(5)) {
+	header('Location: /learn.php');
+	$_SESSION['message'] = 'Отказано в доступе: несоответствие уровня доступа.';
+}
 ?>
 
 <!DOCTYPE html> 
@@ -13,11 +14,10 @@
 	<title>Сайт Екатерины Анощенковой</title>
 	<link rel="stylesheet" href="css\style.css">
 	<link rel="stylesheet" href="css\navbar.css">
-        <link rel="stylesheet" href="css\anchor.css">
-	<link rel="stylesheet" href="css\slider.css">
+        <link rel="stylesheet" href="css\anchor.css">       
 	<script src="js\navbar.js"></script>
-	<link type="image/x-icon" href="img\back_round.jpg" rel="shortcut icon">
-    	<link type="Image/x-icon" href="img\back_round.jpg" rel="icon">
+	<link type="image\x-icon" href="img\back_round.jpg" rel="shortcut icon">
+    	<link type="Image\x-icon" href="img\back_round.jpg" rel="icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -25,11 +25,14 @@
 
 <menu id="content">
 	<div class="box1"><a class="nava" href="index.php"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
-	<div class="box2" id="box2_1"><a class="nava" href="learn.php">Обучение</a></div>
-	<div class="box2" id="box2_2"><a class="nava" href="olymp.php">Олимпиады</a></div>
+	<?php                
+	if (teacher_access()) {
+		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Рабочий кабинет</a></div>';
+	} 
+	?>
+	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
 	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php                   
-	safe_session_start();
 	if ($_SESSION['user']) {
 		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
@@ -57,7 +60,7 @@
 					Или ссылку: <a href="https://google.com">GOOGLE</a>
 				</div>
 				<div style="padding-bottom: 10px;">
-					&nbsp;&nbsp;<span class="checkmark">✓</span>&nbsp;
+					&nbsp;&nbsp;<span class="checkmark">&check;</span>&nbsp;
 					А тут текст с галочкой.
 				</div>
 			<a class="anchor" id="lesson002"></a>
@@ -71,20 +74,7 @@
 					И тут...
 				</div>
 		</div>
-		<div class="anchor_certificates">			
-			<ul id="slides" onload="start_sliding()">
-				<li class="slide showing"><image src="img\olymp_slide\olymp_slide_1.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_2.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_3.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_4.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_5.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_6.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_7.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_8.jpg" id="adapt_image"></image></li>
-				<li class="slide"><image src="img\olymp_slide\olymp_slide_9.jpg" id="adapt_image"></image></li>
-   			</ul>
-			<script src="js\slide-show.js"></script>
-		</div>
+		<div class="anchor_button"></div>
 	</div>
 </div>
 

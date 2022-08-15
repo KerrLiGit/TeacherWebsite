@@ -32,12 +32,12 @@
 				<select name="class" required>
 				<option></option>
 				<?php
-					require "vendor/lib.php";
-					$mysqli = get_sql_connection();
-					$result = $mysqli->query("SELECT * FROM classes");
-					foreach ($result as $res) {
-						echo '<option value=' . $res['id'] . '>' . $res['num'] . $res['lit'] . '</option>';				
-					}
+				require "vendor/lib.php";
+				$mysqli = get_sql_connection();
+				$result = $mysqli->query("SELECT * FROM classes");
+				foreach ($result as $res) {
+					echo '<option value=' . $res['id'] . '>' . $res['num'] . $res['lit'] . '</option>';				
+				}
 				?>
 				</select>
 			</label>
@@ -50,7 +50,7 @@
 				<input type="password" name="pass" placeholder="Введите пароль" required>
 			</label>
 			<label><a href="signin.php">Вход</a></label>                                                                             
-			<button type="submit" title="Регистрация">Войти</button>
+			<button type="submit" title="Отправить запрос на регистрацию">Отправить</button>
 			<label class="message"><?php echo session_message("message-auth"); ?></label>
 		</form>
 	</div>

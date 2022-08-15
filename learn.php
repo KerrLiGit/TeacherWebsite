@@ -16,12 +16,16 @@
 
 <menu id="content">
 	<div class="box1"><a class="nava" href="index.php"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
-	<div class="box2" id="box2_1"><a class="nava">Обучение</a></div>
-	<div class="box2" id="box2_2"><a class="nava" href="olymp.php">Олимпиады</a></div>
-	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
-	<?php 
+	<?php
 	require "vendor/lib.php";
 	safe_session_start();
+	if (teacher_access()) {
+		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Рабочий кабинет</a></div>';
+	} 
+	?>
+	<div class="box2" id="box2_2"><a class="nava">Обучение</a></div>
+	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
+	<?php 
 	if ($_SESSION['user']) {
 		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
@@ -39,7 +43,7 @@
 	<div class="wrapper">
 		<div class="math5">
 			<image src="img\learn\learn_math5.png" style="width: 100px;"></image><br>
-			<div><a href="learn5.php" style="color: black; font-size: 20px">5 класс<br> Математика</a></div>
+			<div><a href="learn05math.php" style="font-size: 20px">5 класс<br>Математика</a></div>
 		</div>
 		<div class="math6">
 			<image src="img\learn\learn_math6.png" style="width: 100px;"></image><br>

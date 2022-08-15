@@ -6,8 +6,8 @@
 	$pass = $_POST['pass'];
 	//$pass = md5($_POST['pass']);
 	$mysqli = get_sql_connection();
-	$stmt = $mysqli->prepare("SELECT a.*, r.descript FROM accounts a LEFT JOIN roles r ON a.role = r.role " .  
-					"WHERE login = ? AND password = ?");
+	$stmt = $mysqli->prepare("SELECT a.*, c.num, c.lit FROM accounts a LEFT JOIN classes c ON a.class = c.id ". 
+		"WHERE a.login = ? AND a.`password` = ? AND a.confirm = 1");
 	$stmt->bind_param("ss", $login, $pass);
 	$stmt->execute();
 	$check = $stmt->get_result();
@@ -19,9 +19,10 @@
 			"name" => $user['name'],
 			"secname" => $user['secname'],
 			"role" => $user['role'],
-			"descript" => $user['descript']
+			"num" => $user['num'],
 		];
-		header('Location: ../index.php');	
+		header('Location: ../index.php');
+		$_SESSION['message-auth'] = 'Успешный вход.';	
 	}
 	else {
 		header('Location: ../signin.php');

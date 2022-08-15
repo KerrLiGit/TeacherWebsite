@@ -10,16 +10,29 @@
 	$pass = $_POST['pass'];
 	$role = "student";
 
-	echo $surname . " " . $name . " " . $secname . " " . $class . " " . $login . " " . $pass;
-
 	$mysqli = get_sql_connection();
+
+	$stmt = $mysqli->prepare("SELECT count(*) FROM accounts WHERE login = ?");
+        $stmt->bind_param("s", $login);
+	if (!$stmt->execute()) {
+		$_SESSION['message-auth'] = "Ошибка сервера. " . $mysqli->error;
+		header('Location: ../login.php');
+		return;	
+	}
+	if ($stmt->get_result()->fetch_row()[0] > 0) {
+		$_SESSION['message-auth'] = "Такой логин уже существует.";
+		header('Location: ../login.php');
+		return;
+	
+	}
+
 	$stmt = $mysqli->prepare("INSERT INTO accounts (role, login, `password`, surname, name, secname, class) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssi", $role, $login, $pass, $surname, $name, $secname, $class);
 	if (!$stmt->execute()) {
 		$_SESSION['message-auth'] = "Ошибка регистрации. " . $mysqli->error;
-		header('Location: ../');
+		header('Location: ../login.php');
 		return;
 	}
-	$_SESSION['message-auth'] = "Успешная регистрация. " . $mysqli->error;
-	header('Location: ../index.php');			
+	$_SESSION['message-auth'] = "Успешная регистрация. Ожидайте подтверждения аккаунта учителем." . $mysqli->error;
+	header('Location: ../login.php');			
 ?>
