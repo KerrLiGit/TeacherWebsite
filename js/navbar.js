@@ -32,4 +32,5 @@ function box2_vis(vis) { // показ/скрытие box2
 	document.getElementById("box2_2").style.display = vis;
 	document.getElementById("box2_3").style.display = vis;
 	document.getElementById("box2_4").style.display = vis;
+	document.getElementById("box2_5").style.display = vis;
 }

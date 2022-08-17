@@ -2,9 +2,9 @@
 	require "lib.php";
 
 	$mysqli = get_sql_connection();
-	$stmt = $mysqli->prepare('UPDATE accounts SET confirm = 1 WHERE id = ?');
-	$id = $_GET['id'];
-	$stmt->bind_param('i', $id);
+	$stmt = $mysqli->prepare('UPDATE accounts SET confirm = 1 WHERE login = ?');
+	$login = $_POST['login'];
+	$stmt->bind_param('s', $login);
 	if (!$stmt->execute()) {
 		//
 	}

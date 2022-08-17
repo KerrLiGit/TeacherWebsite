@@ -23,7 +23,6 @@
 		$_SESSION['message-auth'] = "Такой логин уже существует.";
 		header('Location: ../login.php');
 		return;
-	
 	}
 
 	$stmt = $mysqli->prepare("INSERT INTO accounts (role, login, `password`, surname, name, secname, class) VALUES (?, ?, ?, ?, ?, ?, ?)");

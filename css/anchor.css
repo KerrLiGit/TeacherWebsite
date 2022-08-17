@@ -54,10 +54,10 @@
 		padding-left: 10px;
 	}
 	
-	.anchor_certificates {
+	/*.anchor_button {
 		grid-column: 1 / 10;
 		grid-row: 2;
-	}
+	}*/
 
 }
 
@@ -82,14 +82,14 @@
 	}
 
 	.anchor_main {
-		grid-column: 2 / 11;
+		grid-column: 2 / /*11*/13; /*сменить при возврете anchor_button*/
 		grid-row: 1;
 		padding-left: 30px;
 		padding-right: 30px;
 	}
 	
-	.anchor_button {
+	/*.anchor_button {
 		grid-column: 11 / 13;
 		grid-row: 1;
-	}
+	}*/
 }

@@ -41,7 +41,7 @@ CREATE TABLE `accounts` (
   KEY `FK_accounts_2` (`class`),
   CONSTRAINT `FK_accounts_1` FOREIGN KEY (`role`) REFERENCES `roles` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_accounts_2` FOREIGN KEY (`class`) REFERENCES `classes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Аккаунты пользователей';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Аккаунты пользователей';
 
 --
 -- Dumping data for table `accounts`
@@ -98,6 +98,28 @@ INSERT INTO `roles` (`role`,`descript`) VALUES
  ('student','Ученик'),
  ('teacher','Учитель');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `topics`
+--
+
+DROP TABLE IF EXISTS `topics`;
+CREATE TABLE `topics` (
+  `class` int unsigned NOT NULL,
+  `num` int unsigned NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `subtitle` varchar(45) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  PRIMARY KEY (`class`,`num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `topics`
+--
+
+/*!40000 ALTER TABLE `topics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 
 
 

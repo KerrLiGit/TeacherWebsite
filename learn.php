@@ -20,17 +20,18 @@
 	require "vendor/lib.php";
 	safe_session_start();
 	if (teacher_access()) {
-		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Рабочий кабинет</a></div>';
+		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Кабинет</a></div>';
 	} 
-	?>
-	<div class="box2" id="box2_2"><a class="nava">Обучение</a></div>
-	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
+	?>                                                                           
+	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
+	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
+	<div class="box2" id="box2_4"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php 
 	if ($_SESSION['user']) {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="signin.php">Войти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="signin.php">Войти</a></div>';
 	}
 	?>
 	
@@ -43,51 +44,51 @@
 	<div class="wrapper">
 		<div class="math5">
 			<image src="img\learn\learn_math5.png" style="width: 100px;"></image><br>
-			<div><a href="learn05math.php" style="font-size: 20px">5 класс<br>Математика</a></div>
+			<div><a href="topic.php?class=5&type=math" style="font-size: 20px">5 класс<br>Математика</a></div>
 		</div>
 		<div class="math6">
 			<image src="img\learn\learn_math6.png" style="width: 100px;"></image><br>
-			6 класс<br> Математика 
+			<div><a href="topic.php?class=6&type=math" style="font-size: 20px">6 класс<br>Математика</a></div> 
 		</div>
 		<div class="alg7">
 			<image src="img\learn\learn_alg7.png" style="width: 100px;"></image><br>
-			7 класс<br> Алгебра
+			<div><a href="topic.php?class=7&type=alg" style="font-size: 20px">7 класс<br> Алгебра</a></div>
 		</div>
 		<div class="geo7">
 			<image src="img\learn\learn_geo7.png" style="width: 100px;"></image><br>
-			7 класс<br> Геометрия
+			<div><a href="topic.php?class=7&type=geo" style="font-size: 20px">7 класс<br> Геометрия</a></div>
 		</div>
 		<div class="alg8">
 			<image src="img\learn\learn_alg8.png" style="width: 100px;"></image><br>
-			8 класс<br> Алгебра
+			<div><a href="topic.php?class=8&type=alg" style="font-size: 20px">8 класс<br> Алгебра</a></div>
 		</div>
 		<div class="geo8">
 			<image src="img\learn\learn_geo8.png" style="width: 100px;"></image><br>
-			8 класс<br> Геометрия
+			<div><a href="topic.php?class=8&type=geo" style="font-size: 20px">8 класс<br> Геометрия</a></div>
 		</div>
 		<div class="alg9">
 			<image src="img\learn\learn_alg9.png" style="width: 100px;"></image><br>
-			9 класс<br> Алгебра
+			<div><a href="topic.php?class=9&type=alg" style="font-size: 20px">9 класс<br> Алгебра</a></div>
 		</div>
 		<div class="geo9">
 			<image src="img\learn\learn_geo9.png" style="width: 100px;"></image><br>
-			9 класс<br> Геометрия
+			<div><a href="topic.php?class=9&type=geo" style="font-size: 20px">9 класс<br> Геометрия</a></div>
 		</div>
 		<div class="math10">
 			<image src="img\learn\learn_math10.png" style="width: 100px;"></image><br>
-			10 класс<br> Алгебра и начала<br> математического анализа
+			<div><a href="topic.php?class=10&type=alg" style="font-size: 20px">10 класс<br> Алгебра и начала<br> математического анализа</a></div>
 		</div>
 		<div class="geo10">
 			<image src="img\learn\learn_geo10.png" style="width: 100px;"></image><br>
-			10 класс<br> Геометрия
+			<div><a href="topic.php?class=10&type=geo" style="font-size: 20px">10 класс<br> Геометрия</a></div>
 		</div>
 		<div class="math11">
 			<image src="img\learn\learn_math11.png" style="width: 100px;"></image><br>
-			11 класс<br> Алгебра и начала<br> математического анализа
+			<div><a href="topic.php?class=11&type=alg" style="font-size: 20px">11 класс<br> Алгебра и начала<br> математического анализа</a></div>
 		</div>
 		<div class="geo11">
 			<image src="img\learn\learn_geo11.png" style="width: 100px;"></image><br>
-			11 класс<br> Геометрия
+			<div><a href="topic.php?class=11&type=geo" style="font-size: 20px">11 класс<br> Геометрия</a></div>
 		</div>
 	</div>
 </div>

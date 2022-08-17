@@ -20,24 +20,25 @@
 	require "vendor/lib.php";
 	safe_session_start();
 	if (teacher_access()) {
-		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Рабочий кабинет</a></div>';
+		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Кабинет</a></div>';
 	} 
 	?>
 	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
-	<div class="box2" id="box2_3"><a class="nava" href="about.php">Обо мне</a></div>
+	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
+	<div class="box2" id="box2_4"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php 
 	if ($_SESSION['user']) {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="signin.php">Войти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="signin.php">Войти</a></div>';
 	}
 	?>
 	
 </menu>
 
-<div class="box1o" id="btno" onclick="openNav()"><b>&#9776;</b></div>  
-<div class="box1c" id="btnc" onclick="closeNav()"><b>&times;</b></div>
+<div class="box1o" id="btno" onchange="openNav()"><b>&#9776;</b></div>  
+<div class="box1c" id="btnc" onchange="closeNav()"><b>&times;</b></div>
 
 <div class="image_block">
 	<image class="back_image" src="img\back.png"></image>

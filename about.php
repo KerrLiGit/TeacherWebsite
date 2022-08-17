@@ -22,17 +22,18 @@
 	require "vendor/lib.php";
 	safe_session_start();
 	if (teacher_access()) {
-		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Рабочий кабинет</a></div>';
+		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Кабинет</a></div>';
 	} 
-	?>
+	?>                                                                                
 	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
-	<div class="box2" id="box2_3"><a class="nava">Обо мне</a></div>
+	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
+	<div class="box2" id="box2_4"><a class="nava">Обо мне</a></div>
 	<?php               
 	if ($_SESSION['user']) {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
-		echo '<div class="box2" id="box2_4"><a class="nava" href="signin.php">Войти</a></div>';
+		echo '<div class="box2" id="box2_5"><a class="nava" href="signin.php">Войти</a></div>';
 	}
 	?>	
 </menu>

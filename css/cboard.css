@@ -8,14 +8,14 @@
 .cboard td {
 	border: 1px solid;
 	border-color: rgba(0, 0, 139, 0.212);
-	text-align: center;
+	text-align: left;
 	padding: 2px;
 }
 
-.cboard .white { 	
-	background: rgba(255, 255, 255, 0.521);
+.cboard tr:nth-child(even) { 	
+	background: rgba(255, 255, 255, 0.521);     
 }
 
-.cboard .blue {
-	background: rgba(0, 0, 139, 0.212);
+.cboard tr:nth-child(odd) {
+	background: rgba(0, 0, 139, 0.212); 
 }

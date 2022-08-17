@@ -27,29 +27,28 @@ USE teacherbase;
 
 DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `role` varchar(45) NOT NULL,
   `login` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `surname` varchar(45) NOT NULL COMMENT 'Фамилия',
-  `name` varchar(45) NOT NULL COMMENT 'Имя',
-  `secname` varchar(45) NOT NULL COMMENT 'Отчество',
+  `role` varchar(45) NOT NULL,
+  `surname` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `secname` varchar(45) NOT NULL,
   `class` int unsigned DEFAULT NULL,
-  `confirm` int unsigned NOT NULL DEFAULT '0' COMMENT 'Профиль подтвержден учителем',
-  PRIMARY KEY (`id`),
-  KEY `FK_accounts_1` (`role`),
-  KEY `FK_accounts_2` (`class`),
-  CONSTRAINT `FK_accounts_1` FOREIGN KEY (`role`) REFERENCES `roles` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_accounts_2` FOREIGN KEY (`class`) REFERENCES `classes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Аккаунты пользователей';
+  `confirm` int unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`login`),
+  KEY `FK_accounts_1` (`class`),
+  KEY `FK_accounts_2` (`role`),
+  CONSTRAINT `FK_accounts_1` FOREIGN KEY (`class`) REFERENCES `classes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_accounts_2` FOREIGN KEY (`role`) REFERENCES `roles` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Пользователи';
 
 --
 -- Dumping data for table `accounts`
 --
 
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`id`,`role`,`login`,`password`,`surname`,`name`,`secname`,`class`,`confirm`) VALUES 
- (1,'teacher','catherina','11062015','Анощенкова','Екатерина','Васильевна',NULL,1);
+INSERT INTO `accounts` (`login`,`password`,`role`,`surname`,`name`,`secname`,`class`,`confirm`) VALUES 
+ ('catherina','11062015','teacher','Анощенкова','Екатерина','Васильевна',NULL,1);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 
 
@@ -98,6 +97,29 @@ INSERT INTO `roles` (`role`,`descript`) VALUES
  ('student','Ученик'),
  ('teacher','Учитель');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+
+
+--
+-- Definition of table `topics`
+--
+
+DROP TABLE IF EXISTS `topics`;
+CREATE TABLE `topics` (
+  `class` int unsigned NOT NULL AUTO_INCREMENT,
+  `num` int unsigned NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `subtitle` varchar(45) NOT NULL,
+  `content` varchar(200) NOT NULL,
+  PRIMARY KEY (`class`,`num`,`type`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Уроки';
+
+--
+-- Dumping data for table `topics`
+--
+
+/*!40000 ALTER TABLE `topics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topics` ENABLE KEYS */;
 
 
 
