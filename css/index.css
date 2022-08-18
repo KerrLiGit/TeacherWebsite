@@ -5,18 +5,16 @@
 	#name {
 		color: darkblue;
 		font-family: sans-serif;
+		text-align: center;
 	}
 
 
 	/* фон главной страницы */	
 
 	.back_image {
-		height: 0px;
 		width: auto;
 		position: absolute;
-		z-index: 0;
-		top: 0px;
-		left: 0px;
+		z-index: 0;  
 	}
 
 	/* таблица для главной страницы, смартфон */
@@ -35,17 +33,17 @@
 		grid-column: 2 / 4;
 		grid-row: 1;
 		z-index: 1;
-		margin-top: 20px;
+		margin-top: 1em;
 	}
 	
 	.main_text {
 		font-family: sans-serif;
 		grid-column: 1 / 5;
 		grid-row: 2;
-		padding-left: 30px;
-		padding-right: 30px;
+		padding-left: 1em;
+		padding-right: 1em;
 		z-index: 1;
-		margin-top: 20px;
+		margin-top: 1em;
 	}
 	
 	.main_footer {
@@ -62,7 +60,8 @@
 	#name {
 		font-family: sans-serif;
 		color: floralwhite;
-		margin-top: 30px;
+		margin-top: 1em;
+		text-align: left;
 	}
 
 
@@ -99,10 +98,10 @@
 		font-family: sans-serif;
 		grid-column: 3 / 9;
 		grid-row: 1;
-		padding-left: 30px;
-		padding-right: 30px;
+		padding-left: 1.5em;
+		padding-right: 1.5em;
 		z-index: 1;
-		margin-top: 100px;
+		margin-top: 6em;
 	}
 	
 	.main_footer {

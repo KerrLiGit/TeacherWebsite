@@ -107,7 +107,7 @@ $TYPE = $_GET['type'];
 						<input type="hidden" name="num" value=' . $anchor[1] . ' required></input>
 						<input type="hidden" name="type" value=' . $anchor[2] . ' required></input>
 						<input type="date" name="deadline" title="Сдать до" required></input><br>
-						<input type="text" id="studentvalue"></input><br>
+						<input type="text" id="studentvalue" title="Поиск" placeholder="Поиск"></input><br>
 						<select id="studentselect" name="login" title="Начать вводить имя" required>';
 					$student = $students->fetch_row();
 					echo '<option></option>';
@@ -118,7 +118,7 @@ $TYPE = $_GET['type'];
 					}
 					echo '</select>&nbsp;<button type="submit" title="Задать урок ученику">Задать</button></form></div>';
 
-					$classes = $mysqli->query('SELECT id, num, lit FROM classes');
+					$classes = $mysqli->query('SELECT id, num, lit FROM classes ORDER BY num, lit');
 					echo '<div style="padding-bottom: 10px;">
 						<form action="vendor/issuetopicclass.php" method="post">
 						<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>

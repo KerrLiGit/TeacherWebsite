@@ -6,19 +6,19 @@
 	flex-wrap: nowrap;
 	justify-content: space-between;
 	align-items: center;
-	row-gap: 20px;
-	column-gap: 50px;
+	row-gap: 1em;
+	column-gap: 1.5em;
 	user-select: none;
 	font-family: sans-serif;
-	font-size: 20px;
-	padding: 10px;
-	padding-left: 20px;
+	font-size: 1em;
+	padding: 0.5em;
+	padding-left: 1.4em;
 	background-color: darkblue;
 }
 
 .box1 {
 	flex-grow: 20;
-	font-size: 16px;
+	font-size: 1em;
 	text-align: left;
 	color: floralwhite;
 	margin-right: auto;
@@ -26,26 +26,25 @@
 
 .box1o {
 	flex-grow: 1;
-	font-size: 20px;
+	font-size: 1.2em;
 	text-align: left;
 	color: floralwhite;
-	margin-right: 0px;
+	margin-right: auto;
 	position: fixed;
-	right: 20px;
-	top: 22px;
+	right: 0.8em;
+	top: 0.8em;
 	user-select: none;
 	z-index: 9999;
 }
 
 .box1c {
 	flex-grow: 1;
-	font-size: 30px;
+	font-size: 2em;
 	text-align: left;
 	color: floralwhite;
-	margin-right: 0px;
 	position: fixed;
-	right: 20px;
-	top: 20px;
+	right: 0.4em;
+	top: 0.4em;
 	user-select: none;
 	z-index: 9999;
 }
@@ -54,16 +53,17 @@
 	flex-grow: 1;
 	text-align: center;
 	color: floralwhite;
-	margin-right: 30px;
+	margin-right: 2em;
 }
 
 .box1 .name {
-	font-size: 30px;
+	font-size: 1.5em;
+	line-height: normal;
 	font-family: sans-serif;
 }
 
 .nava {
-	font-size: 16px;
+	font-size: 1em;
 	font-family: sans-serif;
 }
 

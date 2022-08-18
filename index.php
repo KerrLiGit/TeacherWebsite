@@ -15,7 +15,7 @@
 <body onLoad="onResize()">
 
 <menu id="content">
-	<div class="box1"><a class="nava"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
+	<div class="box1"><a class="nava"><div class="name">Екатерина Анощенкова</div>учитель&nbsp;математики</a></div>
 	<?php
 	require "vendor/lib.php";
 	safe_session_start();
@@ -37,8 +37,8 @@
 	
 </menu>
 
-<div class="box1o" id="btno" onchange="openNav()"><b>&#9776;</b></div>  
-<div class="box1c" id="btnc" onchange="closeNav()"><b>&times;</b></div>
+<div class="box1o" id="btno" onclick="openNav()"><b>&#9776;</b></div>  
+<div class="box1c" id="btnc" onclick="closeNav()"><b>&times;</b></div>
 
 <div class="image_block">
 	<image class="back_image" src="img\back.png"></image>

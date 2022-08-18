@@ -66,7 +66,9 @@ if (!teacher_access()) {
 		<div class="anchor_main">
 			<?php
 			$mysqli = get_sql_connection();
-			$stmt = $mysqli->query("SELECT a.surname, a.name, a.secname, c.num, c.lit, a.login FROM accounts a, classes c WHERE a.confirm = false AND a.class = c.id");
+			$stmt = $mysqli->query('SELECT a.surname, a.name, a.secname, c.num, c.lit, a.login FROM accounts a 
+				LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 0 and a.role = "student"
+				ORDER BY c.num, c.lit, a.surname, a.name, a.secname');
 			$student = $stmt->fetch_row();
 			if ($student[0]) {
 				echo '<a class="anchor" id="confirm"></a>';
@@ -101,7 +103,7 @@ if (!teacher_access()) {
 								<option></option>
 								<?php
 								$mysqli = get_sql_connection();
-								$result = $mysqli->query("SELECT * FROM classes");
+								$result = $mysqli->query("SELECT id, num, lit FROM classes ORDER BY num, lit");
 								foreach ($result as $res) {
 									echo '<option value=' . $res['id'] . '>' . $res['num'] . $res['lit'] . '</option>';				
 								}
@@ -118,7 +120,8 @@ if (!teacher_access()) {
 						$classid = $_GET['classid'];
 						$mysqli = get_sql_connection();
 						$stmt = $mysqli->prepare('SELECT a.surname, a.name, a.secname, c.num, c.lit FROM accounts a 
-							LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student" AND a.class = ?');
+							LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student" AND a.class = ?
+							ORDER BY a.surname, a.name, a.secname');
 						$stmt->bind_param('i', $classid);
 						if ($stmt->execute()) {
 							$result = $stmt->get_result();
