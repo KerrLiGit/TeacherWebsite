@@ -2,7 +2,7 @@
 require "vendor/lib.php";
 safe_session_start();
 global $CLASSNUM;
-$CLASSNUM = $_GET['class'];
+$CLASSNUMS = $_GET['class'];
 global $TYPE;
 $TYPE = $_GET['type'];
 ?>
@@ -50,97 +50,107 @@ $TYPE = $_GET['type'];
 	<div class="anchor_wrapper">
 		<nav><div class="anchor_menu" id="anchor_content">
 			<?php
-			$mysqli = get_sql_connection();
-			$result = $mysqli->query("SELECT num, subtitle FROM topics WHERE class = " . $CLASSNUM . " AND type = '" . $TYPE . "'");
-			$anchor = $result->fetch_row();
-			while ($anchor) {
-				echo '<div><a id="panel" href="#lesson' . $anchor[0] . '" style="font-size: 18px; margin-bottom: 10px;">';
-				echo $anchor[1] . '</a></div>';
+			$i = 0;
+			while ($CLASSNUMS[$i]) {
+				$CLASSNUM = $CLASSNUMS[$i];
+				$mysqli = get_sql_connection();
+				$result = $mysqli->query("SELECT num, subtitle FROM topics WHERE class = " . $CLASSNUM . " AND type = '" . $TYPE . "'");
 				$anchor = $result->fetch_row();
+				while ($anchor) {
+					echo '<div><a id="panel" href="#lesson' . $anchor[0] . '" style="font-size: 18px; margin-bottom: 10px;">';
+					echo $anchor[1] . '</a></div>';
+					$anchor = $result->fetch_row();
+				}
+				$i++;
 			}
 			?>
 		</div></nav>
 		<div class="anchor_main">
 			<?php
-			$result = $mysqli->query("SELECT class, num, type, title, content, hidden FROM topics WHERE class = " . 
-				$CLASSNUM . " AND type = '" . $TYPE . "'");
-			$anchor = $result->fetch_row();
-			echo '<table border="0px" width="100%">';
-			while ($anchor) {
-				echo '<tr>';
-				echo '<td valign="top">';
-				echo '<a class="anchor" id="lesson' . $anchor[1] . '"></a>';
-				echo '<article>' . $anchor[3] . '</article>';
-				echo $anchor[4];
-				$stmt = $mysqli->prepare('SELECT count(*), deadline FROM links WHERE login = ? AND class = ? 
-					AND num = ? AND type = ? AND NOW() < deadline');
-				$login = $_SESSION['user']['login'];
-				$stmt->bind_param("siis", $login, $anchor[0], $anchor[1], $anchor[2]);
-				$stmt->execute(); // !!!
-				$access = $stmt->get_result()->fetch_row();
-				if (teacher_access()) {
-					echo '<div style="padding-bottom: 10px;"><a href="">Скрытое содержание</a></div>';
-					echo $anchor[5];
-				}
-				else if ($access[0]) {
-					echo '<div style="padding-bottom: 10px;"><a href="">Доступно до ' . 
-					$access[1][8] . $access[1][9] . '.' . $access[1][5] . $access[1][6] . '.' . 
-					$access[1][0] . $access[1][1] . $access[1][2] . $access[1][3] . '</a></div>';
-					echo $anchor[5];
-				}
-				else if (!$_SESSION['user']){
-					echo '<div style="padding-bottom: 10px;"><a href="signin.php">Продолжение после получения доступа у учителя</a></div>';
-				}
-				else {
-					echo '<div style="padding-bottom: 10px;"><a href="">Не доступно</a></div>';
-				}
-				echo '</td>';
-				if (teacher_access()) {
-					echo '<td valign="top" width="400px" style="padding-left:20px">';
-					$students = $mysqli->query('SELECT a.login, a.surname, a.name, a.secname, c.num, c.lit FROM accounts a 
-						LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student"');
-					echo '<div style="padding-bottom: 10px;">
-						<article>Задать тему</article>
-						<form action="vendor/issuetopicstudent.php" method="post">
-						<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>
-						<input type="hidden" name="class" value=' . $anchor[0] . ' required></input>
-						<input type="hidden" name="num" value=' . $anchor[1] . ' required></input>
-						<input type="hidden" name="type" value=' . $anchor[2] . ' required></input>
-						<input type="date" name="deadline" title="Сдать до" required></input><br>
-						<input type="text" id="studentvalue" title="Поиск" placeholder="Поиск"></input><br>
-						<select id="studentselect" name="login" title="Начать вводить имя" required>';
-					$student = $students->fetch_row();
-					echo '<option></option>';
-					while ($student) {
-						echo '<option value="' . $student[0] . '">' . $student[4] . $student[5] . ' ' . 
-						$student[1] . ' ' . $student[2] . ' ' . $student[3] . '</option>';
-						$student = $students->fetch_row();
-					}
-					echo '</select>&nbsp;<button type="submit" title="Задать урок ученику">Задать</button></form></div>';
-
-					$classes = $mysqli->query('SELECT id, num, lit FROM classes ORDER BY num, lit');
-					echo '<div style="padding-bottom: 10px;">
-						<form action="vendor/issuetopicclass.php" method="post">
-						<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>
-						<input type="hidden" name="class" value=' . $anchor[0] . ' required></input>
-						<input type="hidden" name="num" value=' . $anchor[1] . ' required></input>
-						<input type="hidden" name="type" value=' . $anchor[2] . ' required></input>
-						<input type="date" name="deadline" title="Сдать до" required></input><br>
-						<select name="classid" required>';
-					$class = $classes->fetch_row();
-					echo '<option></option>';
-					while ($class) {
-						echo '<option value="' . $class[0] . '">' . $class[1] . $class[2] . '</option>';
-						$class = $classes->fetch_row();
-					}
-					echo '</select>&nbsp;
-						<button type="submit" title="Задать урок классу">Задать</button></form></div>';
-					echo '</td>';
-				}
+			$i = 0;
+			while ($CLASSNUMS[$i]) {
+				$CLASSNUM = $CLASSNUMS[$i];
+				$result = $mysqli->query("SELECT class, num, type, title, content, hidden FROM topics WHERE class = " . 
+					$CLASSNUM . " AND type = '" . $TYPE . "'");
 				$anchor = $result->fetch_row();
-				echo '</tr>';
+				echo '<table border="0px" width="100%">';
+				while ($anchor) {
+					echo '<tr>';
+					echo '<td valign="top">';
+					echo '<a class="anchor" id="lesson' . $anchor[1] . '"></a>';
+					echo '<article>' . $anchor[3] . '</article>';
+					echo $anchor[4];
+					$stmt = $mysqli->prepare('SELECT count(*), deadline FROM links WHERE login = ? AND class = ? 
+						AND num = ? AND type = ? AND NOW() < deadline');
+					$login = $_SESSION['user']['login'];
+					$stmt->bind_param("siis", $login, $anchor[0], $anchor[1], $anchor[2]);
+					$stmt->execute(); // !!!
+					$access = $stmt->get_result()->fetch_row();
+					if (teacher_access()) {
+						echo '<div style="padding-bottom: 10px;"><a href="">Скрытое содержание</a></div>';
+						echo $anchor[5];
+					}
+					else if ($access[0]) {
+						echo '<div style="padding-bottom: 10px;"><a href="">Доступно до ' . 
+						$access[1][8] . $access[1][9] . '.' . $access[1][5] . $access[1][6] . '.' . 
+						$access[1][0] . $access[1][1] . $access[1][2] . $access[1][3] . '</a></div>';
+						echo $anchor[5];
+					}
+					else if (!$_SESSION['user']){
+						echo '<div style="padding-bottom: 10px;"><a href="signin.php">Продолжение после получения доступа у учителя</a></div>';
+					}
+					else {
+						echo '<div style="padding-bottom: 10px;"><a href="">Не доступно</a></div>';
+					}
+					echo '</td>';
+					if (teacher_access()) {
+						echo '<td valign="top" width="400px" style="padding-left:20px">';
+						$students = $mysqli->query('SELECT a.login, a.surname, a.name, a.secname, c.num, c.lit FROM accounts a 
+							LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student"');
+						echo '<div style="padding-bottom: 10px;">
+							<article>Задать тему</article>
+							<form action="vendor/issuetopicstudent.php" method="post">
+							<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>
+							<input type="hidden" name="class" value=' . $anchor[0] . ' required></input>
+							<input type="hidden" name="num" value=' . $anchor[1] . ' required></input>
+							<input type="hidden" name="type" value=' . $anchor[2] . ' required></input>
+							<input type="date" name="deadline" title="Сдать до" required></input><br>
+							<input type="text" id="studentvalue" title="Поиск" placeholder="Поиск"></input><br>
+							<select id="studentselect" name="login" title="Начать вводить имя" required>';
+						$student = $students->fetch_row();
+						echo '<option></option>';
+						while ($student) {
+							echo '<option value="' . $student[0] . '">' . $student[4] . $student[5] . ' ' . 
+							$student[1] . ' ' . $student[2] . ' ' . $student[3] . '</option>';
+							$student = $students->fetch_row();
+						}
+						echo '</select>&nbsp;<button type="submit" title="Задать урок ученику">Задать</button></form></div>';
+						
+						$classes = $mysqli->query('SELECT id, num, lit FROM classes ORDER BY num, lit');
+						echo '<div style="padding-bottom: 10px;">
+							<form action="vendor/issuetopicclass.php" method="post">
+							<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>
+							<input type="hidden" name="class" value=' . $anchor[0] . ' required></input>
+							<input type="hidden" name="num" value=' . $anchor[1] . ' required></input>
+							<input type="hidden" name="type" value=' . $anchor[2] . ' required></input>
+							<input type="date" name="deadline" title="Сдать до" required></input><br>
+							<select name="classid" required>';
+						$class = $classes->fetch_row();
+						echo '<option></option>';
+						while ($class) {
+							echo '<option value="' . $class[0] . '">' . $class[1] . $class[2] . '</option>';
+							$class = $classes->fetch_row();
+						}
+						echo '</select>&nbsp;
+							<button type="submit" title="Задать урок классу">Задать</button></form></div>';
+						echo '</td>';
+					}       	
+					$anchor = $result->fetch_row();
+					echo '</tr>';
+				}       
+				echo '</table>';
+				$i++;
 			}
-			echo '</table>';
 			?>
 		</div>
 		<div class="anchor_button"></div>

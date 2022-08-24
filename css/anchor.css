@@ -1,14 +1,14 @@
 /* стиль боковой панели в разделе Олимпиады */
 
 #panel {
-	font-size: 16px;
+	font-size: 1em;
 	text-align: left;
 	color: darkblue;
 	padding-bottom: 15px;
 }
 
 #panel:hover {
-	font-size: 16px;
+	font-size: 1em;
 	text-align: left;
 	color: cornflowerblue;
 	padding-bottom: 15px;
@@ -24,8 +24,7 @@
 	row-gap: 20px;
 	column-gap: 50px;
 	user-select: none;
-	font-family: sans-serif;
-	font-size: 20px;
+	font-size: 1em;
 }
 
 @media (min-width: 0px) {

@@ -10,6 +10,7 @@
 	<link type="image/x-icon" href="img\back_round.jpg" rel="shortcut icon">
     	<link type="Image/x-icon" href="img\back_round.jpg" rel="icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body onLoad="onResize()">
@@ -78,6 +79,7 @@
 		</div>
 	</div>
 </div>
+
 
 
 </body>
