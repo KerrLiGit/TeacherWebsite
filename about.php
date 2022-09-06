@@ -1,3 +1,7 @@
+<?php
+require "vendor/lib.php";
+safe_session_start();
+?>
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -19,8 +23,6 @@
 <menu id="content">
 	<div class="box1"><a class="nava" href="index.php"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
 	<?php
-	require "vendor/lib.php";
-	safe_session_start();
 	if (teacher_access()) {
 		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Кабинет</a></div>';
 	} 
@@ -29,7 +31,7 @@
 	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
 	<div class="box2" id="box2_4"><a class="nava">Обо мне</a></div>
 	<?php               
-	if ($_SESSION['user']) {
+	if (array_key_exists('user', $_SESSION)) {
 		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {

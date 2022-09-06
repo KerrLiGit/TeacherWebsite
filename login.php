@@ -1,3 +1,7 @@
+<?php
+require "vendor/lib.php";
+safe_session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +36,6 @@
 				<select name="class" required>
 				<option></option>
 				<?php
-				require "vendor/lib.php";
 				$mysqli = get_sql_connection();
 				$result = $mysqli->query("SELECT * FROM classes");
 				foreach ($result as $res) {

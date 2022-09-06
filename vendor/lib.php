@@ -6,6 +6,7 @@
 
 	function get_sql_connection() {
 		$mysqli = new mysqli("localhost", "root", "", "teacherbase"); // исп. постоянные соединения
+		$mysqli->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 		return $mysqli;
 	}
 
@@ -20,7 +21,7 @@
 	}
 
 	function teacher_access() {
-		if (!$_SESSION['user'])
+		if (!array_key_exists('user', $_SESSION))
 			return false;          
 		if ($_SESSION['user']['role'] == 'admin' || $_SESSION['user']['role'] == 'teacher') 
 			return true;
@@ -28,7 +29,7 @@
 	}
 
 	function student_access($num) {
-		if (!$_SESSION['user'])
+		if (!array_key_exists('user', $_SESSION))
 			return false;                    
 		if ($_SESSION['user']['role'] == 'admin' || $_SESSION['user']['role'] == 'teacher') 
 			return true;

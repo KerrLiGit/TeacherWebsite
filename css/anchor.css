@@ -34,7 +34,7 @@
 	.anchor_wrapper {
 		display: grid;
 		grid-template-columns: repeat(9, 1fr);
-		grid-template-rows: repeat(2, 1fr);
+		grid-template-rows: repeat(1, 1fr);
 	  	grid-auto-rows: minmax(100px, auto);
 		text-align: left;
 	}
@@ -44,11 +44,12 @@
 		grid-row: 1;
 		font-weight: bold;
 		_position: sticky; /* меню начинает оставаться на месте при прокрутке */
-	    top: 100px;
+		top: 100px;
+		visibility: collapse;
 	}
 	
 	.anchor_main {
-		grid-column: 2 / 10;
+		grid-column: 1 / 10;
 		grid-row: 1;
 		padding-left: 10px;
 	}
@@ -76,8 +77,9 @@
 		grid-column: 1 / 2;
 		grid-row: 1;
 		font-weight: bold;
-		position: sticky;
+		_position: sticky;
 		top: 100px;
+		visibility: visible;
 	}
 
 	.anchor_main {

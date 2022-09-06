@@ -2,7 +2,7 @@
 	require "lib.php";
 
 	$mysqli = get_sql_connection();
-	$stmt = $mysqli->prepare("SELECT deadline FROM links WHERE login = ? AND class = ? AND num = ? AND type = ?");
+	$stmt = $mysqli->prepare("SELECT count(*) FROM links WHERE login = ? AND class = ? AND num = ? AND type = ?");
 	$login = $_POST['login'];
 	$class = $_POST['class'];
 	$num = $_POST['num'];
@@ -13,7 +13,7 @@
 		// ОШИБКА
 		return;
 	}
-	if ($stmt->get_result()->fetch_row()[0]) {
+	if ($stmt->get_result()->fetch_row()[0] != 0) {
 		$stmt = $mysqli->prepare("UPDATE links SET deadline = ? WHERE login = ? AND class = ? AND num = ? AND type = ?");
 		$stmt->bind_param("ssiis", $deadline, $login, $class, $num, $type);
 		if ($stmt->execute()) {

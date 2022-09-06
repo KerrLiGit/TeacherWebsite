@@ -11,19 +11,23 @@
 		return;
 	}
 	$res = $stmtclass->get_result();
-	$login = $res->fetch_row()[0];
+	$logins = array();
+	while ($login = $res->fetch_row()) {
+		$logins[] = $login[0];
+	}
 	$class = $_POST['class'];
 	$num = $_POST['num'];
 	$type = $_POST['type'];
 	$deadline = $_POST['deadline'];
-	while ($login) {
-		$stmt = $mysqli->prepare("SELECT deadline FROM links WHERE login = ? AND class = ? AND num = ? AND type = ?");
+	for ($i = 0; $i < count($logins); $i++) {
+		$login = $logins[$i];
+		$stmt = $mysqli->prepare("SELECT count(*) FROM links WHERE login = ? AND class = ? AND num = ? AND type = ?");
 		$stmt->bind_param("siis", $login, $class, $num, $type);
 		if (!$stmt->execute()) {
 			// ОШИБКА
 			return;
 		}
-		if ($stmt->get_result()->fetch_row()[0]) {
+		if ($stmt->get_result()->fetch_row()[0] != 0) {
 			$stmt = $mysqli->prepare("UPDATE links SET deadline = ? WHERE login = ? AND class = ? AND num = ? AND type = ?");
 			$stmt->bind_param("ssiis", $deadline, $login, $class, $num, $type);
 			if ($stmt->execute()) {
@@ -37,7 +41,6 @@
 				//header('Location: ..' . $_POST['url']);
 			}
 		}
-		$login = $res->fetch_row()[0];
 	}
 	header('Location: ..' . $_POST['url']);
 ?>

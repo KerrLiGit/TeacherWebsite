@@ -1,3 +1,7 @@
+<?php
+require "vendor/lib.php";
+safe_session_start();
+?>
 <!DOCTYPE html> 
 <html lang="en">
 <head>
@@ -6,20 +10,17 @@
 	<link rel="stylesheet" href="css\style.css">
 	<link rel="stylesheet" href="css\navbar.css">
         <link rel="stylesheet" href="css\index.css">
-	<script src="js\navbar.js"></script>
 	<link type="image/x-icon" href="img\back_round.jpg" rel="shortcut icon">
     	<link type="Image/x-icon" href="img\back_round.jpg" rel="icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<body onLoad="onResize()">
+<body onload="onResize()">
 
 <menu id="content">
-	<div class="box1"><a class="nava"><div class="name">Екатерина Анощенкова</div>учитель&nbsp;математики</a></div>
+	<div class="box1"><a class="nava" href="index.php"><div class="name">Екатерина Анощенкова</div>учитель&nbsp;математики</a></div>
 	<?php
-	require "vendor/lib.php";
-	safe_session_start();
 	if (teacher_access()) {
 		echo '<div class="box2" id="box2_1"><a class="nava" href="office.php">Кабинет</a></div>';
 	} 
@@ -28,7 +29,7 @@
 	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
 	<div class="box2" id="box2_4"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php 
-	if ($_SESSION['user']) {
+	if (array_key_exists('user', $_SESSION)) {
 		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
@@ -80,7 +81,7 @@
 	</div>
 </div>
 
-
+<script src="js\navbar.js"></script>	
 
 </body>
 

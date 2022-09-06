@@ -2,7 +2,6 @@
 	require "lib.php";
 
 	$mysqli = get_sql_connection();
-	$stmt = $mysqli->prepare('SELECT count(*) FROM topics WHERE class = ? AND num = ? AND type = ?');
 	$class = $_POST['class'];
 	$num = $_POST['num'];
 	$type = $_POST['type'];
@@ -10,16 +9,22 @@
 	$subtitle = $_POST['subtitle'];
 	$content = $_POST['content'];
 	$hidden = $_POST['hidden'];
-	$stmt->bind_param('iis', $class, $num, $type);
-	if (!$stmt->execute()) {
-		echo "0   " . $mysqli->error;
+	if ($type != "olymp" && $class < 5) {
+		echo "Данная задача не будет отображаться на сайте";
+		header('Location: ../office.php#create');
 		return;
 	}
+	$stmt = $mysqli->prepare('SELECT count(*) FROM topics WHERE class = ? AND num = ? AND type = ?');
+	$stmt->bind_param('iis', $class, $num, $type);
+	if (!$stmt->execute()) {
+		echo $mysqli->error;
+		return;
+	}        
 	if ($stmt->get_result()->fetch_row()[0] == 0) {
 		$stmt->prepare('INSERT INTO topics (class, num, type, title, subtitle, content, hidden) VALUES (?, ?, ?, ?, ?, ?, ?)');
 		$stmt->bind_param('iisssss', $class, $num, $type, $title, $subtitle, $content, $hidden);
 		if (!$stmt->execute()) {
-			echo "1   " . $mysqli->error;
+			echo $mysqli->error;
 			return;
 		}
 	}
@@ -28,7 +33,7 @@
 		$stmt->bind_param('ssssiis', $title, $subtitle, $content, $hidden, $class, $num, $type);
 		if (!$stmt->execute()) {
 			echo $_POST['hidden'] . "++";
-			echo "2   " . $mysqli->error;
+			echo $mysqli->error;
 			return;
 		}
 	}

@@ -1,3 +1,7 @@
+<?php
+require "vendor/lib.php";
+safe_session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +31,6 @@
 			<button type="submit" title="Вход в систему">Войти</button>
 			<label class="message">
 				<?php
-				require "vendor/lib.php"; 
 				echo session_message("message-auth"); 
 				?>
 			</label>

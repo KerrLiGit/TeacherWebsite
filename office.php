@@ -29,14 +29,14 @@ if (!teacher_access()) {
 	<div class="box1"><a class="nava" href="index.php"><name style="font-size: 24px;">Екатерина Анощенкова</name><br>учитель&nbsp;математики</a></div>
 	<?php                 
 	if (teacher_access()) {
-		echo '<div class="box2" id="box2_1"><a class="nava">Кабинет</a></div>';
+		echo '<div class="box2" id="box2_1"href="office.php"><a class="nava">Кабинет</a></div>';
 	} 
 	?>                                                                                
 	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
 	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
 	<div class="box2" id="box2_4"><a class="nava" href="about.php">Обо мне</a></div>
 	<?php                
-	if ($_SESSION['user']) {
+	if (array_key_exists('user', $_SESSION)) {
 		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
 	}
 	else {
@@ -48,6 +48,10 @@ if (!teacher_access()) {
 <div class="box1o" id="btno" onclick="openNav()"><b>&#9776;</b></div>  
 <div class="box1c" id="btnc" onclick="closeNav()"><b>&times;</b></div>
 
+
+
+
+
 <div id="unic_content">
 	<div class="anchor_wrapper">
 		<nav><div class="anchor_menu" id="anchor_content">
@@ -55,7 +59,7 @@ if (!teacher_access()) {
 			$mysqli = get_sql_connection();
 			$stmt = $mysqli->query("SELECT a.login FROM accounts a, classes c WHERE a.confirm = false AND a.class = c.id");
 			$student = $stmt->fetch_row();
-			if ($student[0]) {
+			if (isset($student)) {
 				echo '<div><a id="panel" href="#confirm" style="font-size: 18px; margin-bottom: 10px;">Подтверждение регистрации</a></div>';
 			}
 			?>
@@ -70,13 +74,13 @@ if (!teacher_access()) {
 				LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 0 and a.role = "student"
 				ORDER BY c.num, c.lit, a.surname, a.name, a.secname');
 			$student = $stmt->fetch_row();
-			if ($student[0]) {
+			if (isset($student)) {
 				echo '<a class="anchor" id="confirm"></a>';
 				echo '<article>Подтверждение регистрации</article>';
 				echo '<a class="anchor" id="confirm"></a>';
 				echo '<table class="cboard">';
 				$flag = 0;
-				while ($student) {
+				while (isset($student)) {
 					echo '<tr>';
 					$flag++;
 					echo '<td>' . $student[0] . ' ' . $student[1] . ' ' . $student[2] . '</td>';
@@ -172,7 +176,8 @@ if (!teacher_access()) {
 						<table>
 							<tr>
 								<td>Класс</td>
-								<td><input type="number" pattern="^(5|6|7|8|9|10|11)$" name="class" required></td>
+								<td><input type="number" pattern="^(5|6|7|8|9|10|11)$" name="class" required
+									placeholder="Число от 1 до 11"></td>
 							</tr>
 							<tr>
 								<td>Номер урока</td>
@@ -196,18 +201,18 @@ if (!teacher_access()) {
 								</td>
 							</tr>
 							<tr>
-									<td>Заголовок</td>
-								<td><input type="text" name="title" required size=70></td>
+								<td>Заголовок</td>
+								<td><input type="text" name="title" required class="input"></td>
 							</tr>
 						        <tr>
 								<td>Подзаголовок</td>
-								<td><input type="text" name="subtitle" required size=70></td>
+								<td><input type="text" name="subtitle" required class="input"></td>
 							</tr>
 						</table>
 						<label>Содержание урока</label><br>
-  						<textarea name="content" cols=100 rows=7></textarea><br>
+  						<textarea name="content" class="longinput"></textarea><br>
 						<label>Скрытое содержание урока</label><br>
-  						<textarea name="hidden" cols=100 rows=7></textarea><br>
+  						<textarea name="hidden" class="longinput"></textarea><br>
 						<button type="submit" title="Сохранить урок">Сохранить</button>
  					</form>
 				</div>
@@ -222,10 +227,10 @@ if (!teacher_access()) {
 					Текст...
 				</div>-->
 		</div>
-		<div class="anchor_button"></div>
+		<!--<div class="anchor_button"></div>-->
 	</div>
-	<!--<a href="#openModal">Открыть модальное окно</a>-->
-	<!--<div id="openModal" class="modal">
+	<!--<a href="#openModal">Открыть модальное окно</a>
+	<div id="openModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

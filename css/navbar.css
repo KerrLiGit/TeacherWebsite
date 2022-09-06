@@ -38,12 +38,12 @@
 
 .box1c {
 	flex-grow: 1;
-	font-size: 2em;
+	font-size: 2.2em;
 	text-align: left;
 	color: floralwhite;
 	position: fixed;
 	right: 0.4em;
-	top: 0.4em;
+	top: 0.2em;
 	user-select: none;
 	z-index: 9999;
 }
@@ -53,6 +53,8 @@
 	text-align: center;
 	color: floralwhite;
 	margin-right: 2em;
+	display: inline;
+	//background-color: red;
 }
 
 .box1 .name {
