@@ -35,7 +35,7 @@
 			return true;
 		/*if ($_SESSION['user']['role'] == 'student' && $num == 0)
 			return true;*/
-		if ($_SESSION['user']['role'] == 'student' && $_SESSION['user']['num'] == $num)
+		if ($_SESSION['user']['role'] == 'student' && $_SESSION['user']['classnum'] == $num)
 			return true;
 		return false;
 	}

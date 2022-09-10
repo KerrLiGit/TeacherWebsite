@@ -14,14 +14,14 @@
 		header('Location: ../office.php#create');
 		return;
 	}
-	$stmt = $mysqli->prepare('SELECT count(*) FROM topics WHERE class = ? AND num = ? AND type = ?');
+	$stmt = $mysqli->prepare('SELECT count(*) FROM topic WHERE classnum = ? AND topicnum = ? AND type = ?');
 	$stmt->bind_param('iis', $class, $num, $type);
 	if (!$stmt->execute()) {
 		echo $mysqli->error;
 		return;
 	}        
 	if ($stmt->get_result()->fetch_row()[0] == 0) {
-		$stmt->prepare('INSERT INTO topics (class, num, type, title, subtitle, content, hidden) VALUES (?, ?, ?, ?, ?, ?, ?)');
+		$stmt->prepare('INSERT INTO topic (classnum, topicnum, type, title, subtitle, content, hidden) VALUES (?, ?, ?, ?, ?, ?, ?)');
 		$stmt->bind_param('iisssss', $class, $num, $type, $title, $subtitle, $content, $hidden);
 		if (!$stmt->execute()) {
 			echo $mysqli->error;
@@ -29,7 +29,7 @@
 		}
 	}
 	else {
-		$stmt->prepare('UPDATE topics SET title = ?, subtitle = ?, content = ?, hidden = ? WHERE class = ? AND num = ? AND type = ?');
+		$stmt->prepare('UPDATE topic SET title = ?, subtitle = ?, content = ?, hidden = ? WHERE classnum = ? AND topicnum = ? AND type = ?');
 		$stmt->bind_param('ssssiis', $title, $subtitle, $content, $hidden, $class, $num, $type);
 		if (!$stmt->execute()) {
 			echo $_POST['hidden'] . "++";

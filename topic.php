@@ -53,7 +53,7 @@ $TYPE = $_GET['type'];
 			for ($i = 0; $i < count($CLASSNUMS); $i++) {            
 				$CLASSNUM = $CLASSNUMS[$i];
 				$mysqli = get_sql_connection();
-				$result = $mysqli->query("SELECT num, subtitle FROM topics WHERE class = " . $CLASSNUM . " AND type = '" . $TYPE . "'");
+				$result = $mysqli->query("SELECT topicnum, subtitle FROM topic WHERE classnum = " . $CLASSNUM . " AND type = '" . $TYPE . "'");
 				$anchor = $result->fetch_row();
 				while ($anchor) {
 					echo '<div><a id="panel" href="#lesson' . $anchor[0] . '" style="font-size: 18px; margin-bottom: 10px;">';
@@ -67,7 +67,7 @@ $TYPE = $_GET['type'];
 			<?php
 			for ($i = 0; $i < count($CLASSNUMS); $i++) {
 				$CLASSNUM = $CLASSNUMS[$i];
-				$result = $mysqli->query("SELECT class, num, type, title, content, hidden FROM topics WHERE class = " . 
+				$result = $mysqli->query("SELECT classnum, topicnum, type, title, content, hidden FROM topic WHERE classnum = " . 
 					$CLASSNUM . " AND type = '" . $TYPE . "'");
 				$anchors = array();
 				while ($anchor = $result->fetch_row()) {
@@ -85,8 +85,8 @@ $TYPE = $_GET['type'];
 						echo '<div style="padding-bottom: 10px;"><a href="signin.php">Продолжение после получения доступа у учителя</a></div>';
 					}
 					else {
-						$stmt = $mysqli->prepare('SELECT count(*), deadline FROM links WHERE login = ? AND class = ? 
-							AND num = ? AND type = ? AND NOW() < deadline');
+						$stmt = $mysqli->prepare('SELECT count(*), deadline FROM link WHERE login = ? AND classnum = ? 
+							AND topicnum = ? AND type = ? AND NOW() < deadline');
 						$login = $_SESSION['user']['login'];
 						$stmt->bind_param("siis", $login, $anchor[0], $anchor[1], $anchor[2]);
 						$stmt->execute(); // !!!
@@ -108,8 +108,8 @@ $TYPE = $_GET['type'];
 					echo '</td>';
 					if (teacher_access()) {
 						echo '<td valign="top" width="400px" style="padding-left:20px">';
-						$students = $mysqli->query('SELECT a.login, a.surname, a.name, a.secname, c.num, c.lit FROM accounts a 
-							LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student"');
+						$students = $mysqli->query('SELECT login, surname, name, secname, classnum, classlit FROM account 
+							WHERE confirm = 1 and role = "student"');
 						echo '<div style="padding-bottom: 10px;">
 							<article>Задать тему</article>
 							<form action="vendor/issuetopicstudent.php" method="post">
@@ -129,7 +129,7 @@ $TYPE = $_GET['type'];
 						}
 						echo '</select>&nbsp;<button type="submit" title="Задать урок ученику">Задать</button></form></div>';
 						
-						$classes = $mysqli->query('SELECT id, num, lit FROM classes ORDER BY num, lit');
+						$classes = $mysqli->query('SELECT classid, classnum, classlit FROM class ORDER BY classnum, classlit');
 						echo '<div style="padding-bottom: 10px;">
 							<form action="vendor/issuetopicclass.php" method="post">
 							<input type="hidden" name="url" value=' . $_SERVER['REQUEST_URI'] . ' required></input>

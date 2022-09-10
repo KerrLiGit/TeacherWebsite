@@ -37,9 +37,9 @@ safe_session_start();
 				<option></option>
 				<?php
 				$mysqli = get_sql_connection();
-				$result = $mysqli->query("SELECT * FROM classes");
+				$result = $mysqli->query("SELECT * FROM class");
 				foreach ($result as $res) {
-					echo '<option value=' . $res['id'] . '>' . $res['num'] . $res['lit'] . '</option>';				
+					echo '<option value=' . $res['classid'] . '>' . $res['classnum'] . $res['classlit'] . '</option>';				
 				}
 				?>
 				</select>

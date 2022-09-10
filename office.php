@@ -57,7 +57,8 @@ if (!teacher_access()) {
 		<nav><div class="anchor_menu" id="anchor_content">
 			<?php
 			$mysqli = get_sql_connection();
-			$stmt = $mysqli->query("SELECT a.login FROM accounts a, classes c WHERE a.confirm = false AND a.class = c.id");
+			$stmt = $mysqli->query("SELECT a.login FROM account a, class c WHERE
+				a.confirm = false AND a.classnum = c.classnum AND a.classlit = c.classlit");
 			$student = $stmt->fetch_row();
 			if (isset($student)) {
 				echo '<div><a id="panel" href="#confirm" style="font-size: 18px; margin-bottom: 10px;">Подтверждение регистрации</a></div>';
@@ -70,9 +71,9 @@ if (!teacher_access()) {
 		<div class="anchor_main">
 			<?php
 			$mysqli = get_sql_connection();
-			$stmt = $mysqli->query('SELECT a.surname, a.name, a.secname, c.num, c.lit, a.login FROM accounts a 
-				LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 0 and a.role = "student"
-				ORDER BY c.num, c.lit, a.surname, a.name, a.secname');
+			$stmt = $mysqli->query('SELECT surname, name, secname, classnum, classlit, login FROM account 
+				WHERE confirm = 0 and role = "student"
+				ORDER BY classnum, classlit, surname, name, secname');
 			$student = $stmt->fetch_row();
 			if (isset($student)) {
 				echo '<a class="anchor" id="confirm"></a>';
@@ -107,9 +108,11 @@ if (!teacher_access()) {
 								<option></option>
 								<?php
 								$mysqli = get_sql_connection();
-								$result = $mysqli->query("SELECT id, num, lit FROM classes ORDER BY num, lit");
+								$result = $mysqli->query("SELECT classid, classnum, classlit FROM class 
+									ORDER BY classnum, classlit");
 								foreach ($result as $res) {
-									echo '<option value=' . $res['id'] . '>' . $res['num'] . $res['lit'] . '</option>';				
+									echo '<option value=' . $res['classid'] . '>' . 
+											$res['classnum'] . $res['classlit'] . '</option>';				
 								}
 								?>
 							</select>
@@ -120,12 +123,12 @@ if (!teacher_access()) {
 				</div>
 				<div style="padding-bottom: 10px;">
 					<?php 
-					if ($_GET) {
+					if ($_GET) {                          
 						$classid = $_GET['classid'];
 						$mysqli = get_sql_connection();
-						$stmt = $mysqli->prepare('SELECT a.surname, a.name, a.secname, c.num, c.lit FROM accounts a 
-							LEFT JOIN classes c ON a.class = c.id WHERE a.confirm = 1 and a.role = "student" AND a.class = ?
-							ORDER BY a.surname, a.name, a.secname');
+						$stmt = $mysqli->prepare('SELECT surname, name, secname, classnum, classlit FROM account
+							LEFT JOIN class USING(classnum, classlit) 
+							WHERE confirm = 1 and role = "student" AND classid = ? ORDER BY surname, name, secname');
 						$stmt->bind_param('i', $classid);
 						if ($stmt->execute()) {
 							$result = $stmt->get_result();
@@ -189,7 +192,7 @@ if (!teacher_access()) {
 								<select name="type" required cols=100>
 									<?php
 									$mysql = get_sql_connection();
-									$types = $mysql->query('SELECT `type`, descript FROM types ORDER BY `type`');
+									$types = $mysql->query('SELECT `type`, descript FROM type ORDER BY `type`');
 									$type = $types->fetch_row();
 									echo '<option></option>';
 									while ($type) {
