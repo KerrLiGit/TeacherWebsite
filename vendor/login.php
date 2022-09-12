@@ -28,7 +28,8 @@
 	$classnum = $classres[0];
 	$classlit = $classres[1];
 
-	$stmt = $mysqli->prepare("SELECT count(*) FROM account WHERE login = ?");
+	// проверка
+	/*$stmt = $mysqli->prepare("SELECT count(*) FROM account WHERE login = ?");
         $stmt->bind_param("s", $login);
 	if (!$stmt->execute()) {
 		$_SESSION['message-auth'] = "Ошибка сервера. " . $mysqli->error;
@@ -39,13 +40,13 @@
 		$_SESSION['message-auth'] = "Такой логин уже существует.";
 		header('Location: ../login.php');
 		return;
-	}
-
+	}*/
 	$stmt = $mysqli->prepare("INSERT INTO account (role, login, `password`, surname, name, secname, classnum, classlit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssis", $role, $login, $pass, $surname, $name, $secname, $classnum, $classlit);
 	if (!$stmt->execute()) {
-		$_SESSION['message-auth'] = "Ошибка регистрации. " . $mysqli->error;
-		header('Location: ../login.php');
+		//$_SESSION['message-auth'] = "Ошибка регистрации. " . $mysqli->error;
+		echo $mysqli->error;
+		//header('Location: ../login.php');
 		return;
 	}
 	$_SESSION['message-auth'] = '';

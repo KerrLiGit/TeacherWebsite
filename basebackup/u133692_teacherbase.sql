@@ -134,7 +134,7 @@ INSERT INTO `classnums` (`classnum`) VALUES
 
 DROP TABLE IF EXISTS `links`;
 CREATE TABLE `links` (
-  `login` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Логие аккаунта',
+  `login` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Логин аккаунта',
   `class` int unsigned NOT NULL COMMENT 'Номер класса',
   `num` int unsigned NOT NULL COMMENT 'Номер урока',
   `type` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Тип урока',

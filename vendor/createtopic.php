@@ -11,7 +11,7 @@
 	$hidden = $_POST['hidden'];
 	if ($type != "olymp" && $class < 5) {
 		echo "Данная задача не будет отображаться на сайте";
-		header('Location: ../office.php#create');
+		//header('Location: ../office.php#create');
 		return;
 	}
 	$stmt = $mysqli->prepare('SELECT count(*) FROM topic WHERE classnum = ? AND topicnum = ? AND type = ?');

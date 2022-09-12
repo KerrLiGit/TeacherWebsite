@@ -123,8 +123,8 @@ $TYPE = $_GET['type'];
 						$student = $students->fetch_row();
 						echo '<option></option>';
 						while (isset($student)) {
-							echo '<option value="' . $student[0] . '">' . $student[4] . $student[5] . ' ' . 
-							$student[1] . ' ' . $student[2] . ' ' . $student[3] . '</option>';
+							echo '<option value="' . $student[0] . '">' . $student[1] . ' ' . $student[2] . ' ' . 
+							$student[3] . ' ' . $student[4] . $student[5] . '</option>';
 							$student = $students->fetch_row();
 						}
 						echo '</select>&nbsp;<button type="submit" title="Задать урок ученику">Задать</button></form></div>';

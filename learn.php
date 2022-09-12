@@ -82,7 +82,7 @@ safe_session_start();
 		</div>
 		<div class="geo10">
 			<image src="img\learn\learn_geo10.png" style="width: 100px;"></image><br>
-			<div><a href="topic.php?class[]=10&type=geo">10 класс<br> Геометрия</a></div>
+			<div><a href="topic.php?class[]=9&type=geo">10 класс<br> Геометрия</a></div>
 		</div>
 		<div class="math11">
 			<image src="img\learn\learn_math11.png" style="width: 100px;"></image><br>

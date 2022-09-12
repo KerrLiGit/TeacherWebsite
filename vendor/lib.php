@@ -5,7 +5,9 @@
 	}
 
 	function get_sql_connection() {
-		$mysqli = new mysqli("localhost", "root", "", "teacherbase"); // исп. постоянные соединения
+		//$mysqli = new mysqli("localhost", "u133692_root", "root", "u133692_teacherbase"); // исп. постоянные соединения
+		$mysqli = new mysqli("localhost", "root", "", "teacherbase");
+		//mysqli_report(MYSQLI_REPORT_ALL); 
 		$mysqli->query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 		return $mysqli;
 	}
