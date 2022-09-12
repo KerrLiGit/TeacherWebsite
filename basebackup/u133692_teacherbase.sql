@@ -17,206 +17,194 @@
 
 
 --
--- Create schema teacherbase
+-- Create schema u133692_teacherbase
 --
 
 CREATE DATABASE IF NOT EXISTS u133692_teacherbase;
 USE u133692_teacherbase;
 
 --
--- Definition of table `accounts`
+-- Definition of table `account`
 --
 
-DROP TABLE IF EXISTS `accounts`;
-CREATE TABLE `accounts` (
-  `login` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Логин',
-  `password` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Пароль',
-  `role` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Роль',
-  `surname` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Фамилия',
-  `name` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Имя',
-  `secname` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Отчество',
-  `class` int unsigned DEFAULT NULL COMMENT 'ID класса',
-  `confirm` int unsigned NOT NULL DEFAULT '0' COMMENT 'Аккаунт подтвержден',
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `login` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Логин',
+  `password` varchar(20) NOT NULL COMMENT 'Пароль',
+  `role` varchar(20) NOT NULL COMMENT 'Роль',
+  `surname` varchar(20) NOT NULL COMMENT 'Фамилия',
+  `name` varchar(20) NOT NULL COMMENT 'Имя',
+  `secname` varchar(20) NOT NULL COMMENT 'Отчество',
+  `classnum` int unsigned DEFAULT NULL COMMENT 'Номер класса',
+  `classlit` varchar(1) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Литера класса',
+  `confirm` int unsigned NOT NULL DEFAULT '0' COMMENT 'Подтвержден',
   PRIMARY KEY (`login`),
-  KEY `FK_accounts_1` (`class`),
-  KEY `FK_accounts_2` (`role`),
-  CONSTRAINT `FK_accounts_1` FOREIGN KEY (`class`) REFERENCES `classes` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_accounts_2` FOREIGN KEY (`role`) REFERENCES `roles` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Пользователи';
+  KEY `FK_account_1` (`classnum`,`classlit`),
+  KEY `FK_account_2` (`role`),
+  CONSTRAINT `FK_account_1` FOREIGN KEY (`classnum`, `classlit`) REFERENCES `class` (`classnum`, `classlit`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_account_2` FOREIGN KEY (`role`) REFERENCES `role` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Пользователь';
 
 --
--- Dumping data for table `accounts`
+-- Dumping data for table `account`
 --
 
-/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` (`login`,`password`,`role`,`surname`,`name`,`secname`,`class`,`confirm`) VALUES 
- ('admin','TeTriandox','admin','1','1','1',NULL,1),
- ('catherina','11062015','teacher','Анощенкова','Екатерина','Васильевна',NULL,1);
-/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-
-
---
--- Definition of table `classes`
---
-
-DROP TABLE IF EXISTS `classes`;
-CREATE TABLE `classes` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID класса',
-  `num` int unsigned NOT NULL COMMENT 'Номер класса',
-  `lit` varchar(1) CHARACTER SET utf8  NOT NULL COMMENT 'Литера класса',
-  PRIMARY KEY (`id`),
-  KEY `FK_classes_1` (`num`),
-  CONSTRAINT `FK_classes_1` FOREIGN KEY (`num`) REFERENCES `classnums` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='Классификатор классов учеников';
-
---
--- Dumping data for table `classes`
---
-
-/*!40000 ALTER TABLE `classes` DISABLE KEYS */;
-INSERT INTO `classes` (`id`,`num`,`lit`) VALUES 
- (1,5,'А'),
- (2,5,'Б'),
- (3,5,'В'),
- (4,5,'Р'),
- (5,6,'А'),
- (6,6,'Б'),
- (7,6,'В'),
- (8,6,'Р'),
- (9,7,'А'),
- (10,7,'Б'),
- (11,7,'В'),
- (12,7,'Р'),
- (13,8,'А'),
- (14,8,'Б'),
- (15,8,'В'),
- (16,8,'Р'),
- (17,9,'А'),
- (18,9,'Б'),
- (19,9,'В'),
- (20,9,'Р');
-/*!40000 ALTER TABLE `classes` ENABLE KEYS */;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` (`login`,`password`,`role`,`surname`,`name`,`secname`,`classnum`,`classlit`,`confirm`) VALUES 
+ ('catherina','11062015','teacher','Анощенкова','Екатерина','Васильевна',NULL,NULL,1);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
 
 --
--- Definition of table `classnums`
+-- Definition of table `class`
 --
 
-DROP TABLE IF EXISTS `classnums`;
-CREATE TABLE `classnums` (
+DROP TABLE IF EXISTS `class`;
+CREATE TABLE `class` (
+  `classnum` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Номер класса',
+  `classlit` varchar(1) NOT NULL COMMENT 'Литера класса',
+  `classid` int unsigned DEFAULT NULL COMMENT 'Описание',
+  PRIMARY KEY (`classnum`,`classlit`) USING BTREE,
+  CONSTRAINT `FK_class_1` FOREIGN KEY (`classnum`) REFERENCES `classnum` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Класс';
+
+--
+-- Dumping data for table `class`
+--
+
+/*!40000 ALTER TABLE `class` DISABLE KEYS */;
+INSERT INTO `class` (`classnum`,`classlit`,`classid`) VALUES 
+ (5,'А',17),
+ (5,'Б',18),
+ (5,'В',19),
+ (5,'Р',20),
+ (6,'А',21),
+ (6,'Б',22),
+ (6,'В',23),
+ (6,'Р',24),
+ (7,'А',25),
+ (7,'Б',26),
+ (7,'В',27),
+ (7,'Р',28),
+ (8,'А',29),
+ (8,'Б',30),
+ (8,'В',31),
+ (8,'Р',32),
+ (9,'А',33),
+ (9,'Б',34),
+ (9,'В',35),
+ (9,'Р',36);
+/*!40000 ALTER TABLE `class` ENABLE KEYS */;
+
+
+--
+-- Definition of table `classnum`
+--
+
+DROP TABLE IF EXISTS `classnum`;
+CREATE TABLE `classnum` (
   `classnum` int unsigned NOT NULL COMMENT 'Номер класса',
+  `descript` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Описание',
   PRIMARY KEY (`classnum`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Классификатор номеров классов';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Номер класса';
 
 --
--- Dumping data for table `classnums`
+-- Dumping data for table `classnum`
 --
 
-/*!40000 ALTER TABLE `classnums` DISABLE KEYS */;
-INSERT INTO `classnums` (`classnum`) VALUES 
- (1),
- (2),
- (3),
- (4),
- (5),
- (6),
- (7),
- (8),
- (9),
- (10),
- (11);
-/*!40000 ALTER TABLE `classnums` ENABLE KEYS */;
+/*!40000 ALTER TABLE `classnum` DISABLE KEYS */;
+INSERT INTO `classnum` (`classnum`,`descript`) VALUES 
+ (1,'Первый'),
+ (2,'Второй'),
+ (3,'Третий'),
+ (4,'Четвертый'),
+ (5,'Пятый'),
+ (6,'Шестой'),
+ (7,'Седьмой'),
+ (8,'Восьмой'),
+ (9,'Девятый'),
+ (10,'Десятый'),
+ (11,'Одиннадцатый');
+/*!40000 ALTER TABLE `classnum` ENABLE KEYS */;
 
 
 --
--- Definition of table `links`
+-- Definition of table `link`
 --
 
-DROP TABLE IF EXISTS `links`;
-CREATE TABLE `links` (
-  `login` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Логин аккаунта',
-  `class` int unsigned NOT NULL COMMENT 'Номер класса',
-  `num` int unsigned NOT NULL COMMENT 'Номер урока',
-  `type` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Тип урока',
-  `deadline` datetime NOT NULL COMMENT 'Время, после которого доступ к теме закрывается',
-  KEY `FK_links_1` (`login`),
-  KEY `FK_links_2` (`class`,`num`,`type`),
-  CONSTRAINT `FK_links_1` FOREIGN KEY (`login`) REFERENCES `accounts` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_links_2` FOREIGN KEY (`class`, `num`, `type`) REFERENCES `topics` (`class`, `num`, `type`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Ученики и доступные им темы';
+DROP TABLE IF EXISTS `link`;
+CREATE TABLE `link` (
+  `login` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Логин',
+  `classnum` int unsigned NOT NULL COMMENT 'Номер класса',
+  `type` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Тип',
+  `topicnum` int unsigned NOT NULL COMMENT 'Номер темы',
+  `deadline` date NOT NULL COMMENT 'Срок выполнения'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Связь';
 
 --
--- Dumping data for table `links`
+-- Definition of table `role`
 --
 
---
--- Definition of table `roles`
---
-
-DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles` (
-  `role` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Роль аккаунта',
-  `descript` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Описание',
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `role` varchar(20) NOT NULL COMMENT 'Роль',
+  `descript` varchar(20) NOT NULL COMMENT 'Описание',
   PRIMARY KEY (`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Классификатор ролей';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Роль';
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `role`
 --
 
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`role`,`descript`) VALUES 
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` (`role`,`descript`) VALUES 
  ('admin','Администратор'),
  ('student','Ученик'),
  ('teacher','Учитель');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
 
 --
--- Definition of table `topics`
+-- Definition of table `topic`
 --
 
-DROP TABLE IF EXISTS `topics`;
-CREATE TABLE `topics` (
-  `class` int unsigned NOT NULL COMMENT 'Номер класса',
-  `num` int unsigned NOT NULL COMMENT 'Номер темы',
-  `type` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Тип темы',
-  `title` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Заголовок',
-  `subtitle` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Подзаголовок',
-  `content` varchar(600) CHARACTER SET utf8  NOT NULL COMMENT 'Содержание',
-  `hidden` varchar(600) CHARACTER SET utf8  NOT NULL COMMENT 'Скрытое содержание',
-  PRIMARY KEY (`class`,`num`,`type`) USING BTREE,
-  KEY `FK_topics_1` (`type`),
-  CONSTRAINT `FK_topics_1` FOREIGN KEY (`type`) REFERENCES `types` (`type`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_topics_2` FOREIGN KEY (`class`) REFERENCES `classnums` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Темы уроков';
+DROP TABLE IF EXISTS `topic`;
+CREATE TABLE `topic` (
+  `classnum` int unsigned NOT NULL COMMENT 'Номер класса',
+  `type` varchar(20) NOT NULL COMMENT 'Тип',
+  `topicnum` int unsigned NOT NULL COMMENT 'Номер темы',
+  `title` varchar(40) NOT NULL COMMENT 'Заголовок',
+  `subtitle` varchar(20) NOT NULL COMMENT 'Подзаголовок',
+  `content` varchar(600) NOT NULL COMMENT 'Контент',
+  `hidden` varchar(600) NOT NULL COMMENT 'Скрытый контент',
+  PRIMARY KEY (`classnum`,`type`,`topicnum`),
+  KEY `FK_topic_2` (`type`),
+  CONSTRAINT `FK_topic_1` FOREIGN KEY (`classnum`) REFERENCES `classnum` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_topic_2` FOREIGN KEY (`type`) REFERENCES `type` (`type`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Тема';
 
 --
--- Dumping data for table `topics`
+-- Definition of table `type`
 --
 
---
--- Definition of table `types`
---
-
-DROP TABLE IF EXISTS `types`;
-CREATE TABLE `types` (
-  `type` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Тип темы',
-  `descript` varchar(45) CHARACTER SET utf8  NOT NULL COMMENT 'Описание',
+DROP TABLE IF EXISTS `type`;
+CREATE TABLE `type` (
+  `type` varchar(20) NOT NULL COMMENT 'Тип',
+  `descript` varchar(40) CHARACTER SET utf8 NOT NULL COMMENT 'Описание',
   PRIMARY KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Классификатор типов задач';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Тип';
 
 --
--- Dumping data for table `types`
+-- Dumping data for table `type`
 --
 
-/*!40000 ALTER TABLE `types` DISABLE KEYS */;
-INSERT INTO `types` (`type`,`descript`) VALUES 
+/*!40000 ALTER TABLE `type` DISABLE KEYS */;
+INSERT INTO `type` (`type`,`descript`) VALUES 
  ('alg','Алгебра'),
  ('geo','Геометрия'),
  ('math','Математика'),
  ('olymp','Олимпиада');
-/*!40000 ALTER TABLE `types` ENABLE KEYS */;
+/*!40000 ALTER TABLE `type` ENABLE KEYS */;
 
 
 
