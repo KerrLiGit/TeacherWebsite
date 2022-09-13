@@ -1,25 +1,27 @@
--- MySQL Administrator dump 1.4
+-- MySQL dump 10.13  Distrib 5.7.36, for Linux (x86_64)
 --
+-- Host: localhost    Database: u133692_teacherbase
 -- ------------------------------------------------------
--- Server version	8.0.27
-
+-- Server version	5.7.36-log-cll-lve
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
 --
--- Create schema teacherbase
+-- Create schema u133692_teacherbase
 --
 
-CREATE DATABASE IF NOT EXISTS teacherbase;
-USE teacherbase;
+CREATE DATABASE IF NOT EXISTS u133692_teacherbase;
+USE u133692_teacherbase;
 
 --
 -- Definition of table `account`
@@ -27,21 +29,21 @@ USE teacherbase;
 
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
-  `login` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Логин',
+  `login` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Логин',
   `password` varchar(20) NOT NULL COMMENT 'Пароль',
   `role` varchar(20) NOT NULL COMMENT 'Роль',
   `surname` varchar(20) NOT NULL COMMENT 'Фамилия',
   `name` varchar(20) NOT NULL COMMENT 'Имя',
   `secname` varchar(20) NOT NULL COMMENT 'Отчество',
   `classnum` int unsigned DEFAULT NULL COMMENT 'Номер класса',
-  `classlit` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Литера класса',
+  `classlit` varchar(1) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Литера класса',
   `confirm` int unsigned NOT NULL DEFAULT '0' COMMENT 'Подтвержден',
   PRIMARY KEY (`login`),
   KEY `FK_account_1` (`classnum`,`classlit`),
   KEY `FK_account_2` (`role`),
-  CONSTRAINT `FK_account_1` FOREIGN KEY (`classnum`, `classlit`) REFERENCES `class` (`classnum`, `classlit`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_account_1` FOREIGN KEY (`classnum`, `classlit`) REFERENCES `class` (`classnum`, `classlit`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `FK_account_2` FOREIGN KEY (`role`) REFERENCES `role` (`role`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Пользователь';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Пользователь';
 
 --
 -- Dumping data for table `account`
@@ -64,7 +66,7 @@ CREATE TABLE `class` (
   `classid` int unsigned DEFAULT NULL COMMENT 'Описание',
   PRIMARY KEY (`classnum`,`classlit`) USING BTREE,
   CONSTRAINT `FK_class_1` FOREIGN KEY (`classnum`) REFERENCES `classnum` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Класс';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Класс';
 
 --
 -- Dumping data for table `class`
@@ -102,9 +104,9 @@ INSERT INTO `class` (`classnum`,`classlit`,`classid`) VALUES
 DROP TABLE IF EXISTS `classnum`;
 CREATE TABLE `classnum` (
   `classnum` int unsigned NOT NULL COMMENT 'Номер класса',
-  `descript` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Описание',
+  `descript` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Описание',
   PRIMARY KEY (`classnum`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Номер класса';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Номер класса';
 
 --
 -- Dumping data for table `classnum`
@@ -132,20 +134,22 @@ INSERT INTO `classnum` (`classnum`,`descript`) VALUES
 
 DROP TABLE IF EXISTS `link`;
 CREATE TABLE `link` (
-  `login` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Логин',
+  `login` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Логин',
   `classnum` int unsigned NOT NULL COMMENT 'Номер класса',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Тип',
+  `type` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT 'Тип',
   `topicnum` int unsigned NOT NULL COMMENT 'Номер темы',
-  `deadline` date NOT NULL COMMENT 'Срок выполнения'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Связь';
+  `deadline` date NOT NULL COMMENT 'Срок выполнения',
+  KEY `FK_link_1` (`login`),
+  KEY `FK_link_2` (`classnum`,`type`,`topicnum`),
+  CONSTRAINT `FK_link_1` FOREIGN KEY (`login`) REFERENCES `account` (`login`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `FK_link_2` FOREIGN KEY (`classnum`, `type`, `topicnum`) REFERENCES `topic` (`classnum`, `type`, `topicnum`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Связь';
 
 --
 -- Dumping data for table `link`
 --
 
 /*!40000 ALTER TABLE `link` DISABLE KEYS */;
-INSERT INTO `link` (`login`,`classnum`,`type`,`topicnum`,`deadline`) VALUES 
- ('1',5,'math',1,'2022-09-12');
 /*!40000 ALTER TABLE `link` ENABLE KEYS */;
 
 
@@ -158,7 +162,7 @@ CREATE TABLE `role` (
   `role` varchar(20) NOT NULL COMMENT 'Роль',
   `descript` varchar(20) NOT NULL COMMENT 'Описание',
   PRIMARY KEY (`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Роль';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Роль';
 
 --
 -- Dumping data for table `role`
@@ -189,18 +193,7 @@ CREATE TABLE `topic` (
   KEY `FK_topic_2` (`type`),
   CONSTRAINT `FK_topic_1` FOREIGN KEY (`classnum`) REFERENCES `classnum` (`classnum`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_topic_2` FOREIGN KEY (`type`) REFERENCES `type` (`type`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Тема';
-
---
--- Dumping data for table `topic`
---
-
-/*!40000 ALTER TABLE `topic` DISABLE KEYS */;
-INSERT INTO `topic` (`classnum`,`type`,`topicnum`,`title`,`subtitle`,`content`,`hidden`) VALUES 
- (5,'math',1,'Урок 1. Рациональные числа','Урок 1','<div style=\"padding-bottom: 10px;\">\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n</div>','<div style=\"padding-bottom: 10px;\">\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n</div>'),
- (5,'math',2,'Урок 2. Иррациональные числа','Урок 2','<div style=\"padding-bottom: 10px;\">\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n</div>','<div style=\"padding-bottom: 10px;\">\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n</div>');
-/*!40000 ALTER TABLE `topic` ENABLE KEYS */;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Тема';
 
 --
 -- Definition of table `type`
@@ -209,9 +202,9 @@ INSERT INTO `topic` (`classnum`,`type`,`topicnum`,`title`,`subtitle`,`content`,`
 DROP TABLE IF EXISTS `type`;
 CREATE TABLE `type` (
   `type` varchar(20) NOT NULL COMMENT 'Тип',
-  `descript` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Описание',
+  `descript` varchar(40) CHARACTER SET utf8 NOT NULL COMMENT 'Описание',
   PRIMARY KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Тип';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Тип';
 
 --
 -- Dumping data for table `type`
@@ -228,10 +221,14 @@ INSERT INTO `type` (`type`,`descript`) VALUES
 
 
 
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-09-04 20:28:55

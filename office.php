@@ -179,12 +179,12 @@ if (!teacher_access()) {
 						<table>
 							<tr>
 								<td>Класс</td>
-								<td><input type="number" pattern="^(5|6|7|8|9|10|11)$" name="class" required
+								<td><input pattern="^(1|2|3|4|5|6|7|8|9|10|11)$" name="class" required
 									placeholder="Число от 1 до 11"></td>
 							</tr>
 							<tr>
 								<td>Номер урока</td>
-								<td><input type="number" name="num" required></td>
+								<td><input type="number" name="num" required></td> <!--ЗАПРЕТИТЬ ВВОД ОТРИЦАТЕЛЬНОГО ЧИСЛА-->
 							</tr>
 							<tr>
 								<td>Предмет</td>
@@ -205,17 +205,17 @@ if (!teacher_access()) {
 							</tr>
 							<tr>
 								<td>Заголовок</td>
-								<td><input type="text" name="title" required class="input"></td>
+								<td><input type="text" name="title" required class="input" maxlength="40"></td>
 							</tr>
 						        <tr>
 								<td>Подзаголовок</td>
-								<td><input type="text" name="subtitle" required class="input"></td>
+								<td><input type="text" name="subtitle" required class="input" maxlength="20"></td>
 							</tr>
 						</table>
 						<label>Содержание урока</label><br>
-  						<textarea name="content" class="longinput"></textarea><br>
+  						<textarea name="content" class="longinput" maxlength="600"></textarea><br>
 						<label>Скрытое содержание урока</label><br>
-  						<textarea name="hidden" class="longinput"></textarea><br>
+  						<textarea name="hidden" class="longinput" maxlength="600"></textarea><br>
 						<button type="submit" title="Сохранить урок">Сохранить</button>
  					</form>
 				</div>

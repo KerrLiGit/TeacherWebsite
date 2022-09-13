@@ -29,7 +29,7 @@ safe_session_start();
 	?>                                                                                
 	<div class="box2" id="box2_2"><a class="nava" href="learn.php">Обучение</a></div>
 	<div class="box2" id="box2_3"><a class="nava" href="olymp.php">Олимпиады</a></div>
-	<div class="box2" id="box2_4"><a class="nava" href="olymp.php">Обо мне</a></div> 
+	<div class="box2" id="box2_4"><a class="nava" href="about.php">Обо мне</a></div> 
 	<?php               
 	if (array_key_exists('user', $_SESSION)) {
 		echo '<div class="box2" id="box2_5"><a class="nava" href="vendor\signout.php">Выйти</a></div>';
